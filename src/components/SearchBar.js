@@ -1,6 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 
-function SearchBar() {
+function SearchBar({sortPortfolio, changeCategory}) {
+  const [isCheckedAlpha, setIsCheckedAlpha] = useState(false)
+  const [isCheckedPrice, setIsCheckedPrice] = useState(false)
+
+  function onSortChange(e) {
+    if(e.target.value === "Alphabetically") {
+      setIsCheckedAlpha(true)
+      setIsCheckedPrice(false)
+      sortPortfolio(e.target.value)
+    } else {
+      setIsCheckedPrice(true)
+      setIsCheckedAlpha(false)
+      sortPortfolio(e.target.value)
+    }
+  }
+  
+  function onCategoryChange(e) {
+    changeCategory(e.target.value)
+  }
+
+
   return (
     <div>
       <strong>Sort by:</strong>
@@ -9,8 +29,8 @@ function SearchBar() {
           type="radio"
           value="Alphabetically"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={isCheckedAlpha}
+          onChange={onSortChange}
         />
         Alphabetically
       </label>
@@ -19,15 +39,15 @@ function SearchBar() {
           type="radio"
           value="Price"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={isCheckedPrice}
+          onChange={onSortChange}
         />
         Price
       </label>
       <br />
       <label>
         <strong>Filter:</strong>
-        <select onChange={null}>
+        <select onChange={onCategoryChange}>
           <option value="Tech">Tech</option>
           <option value="Sportswear">Sportswear</option>
           <option value="Finance">Finance</option>
